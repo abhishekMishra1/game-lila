@@ -1,16 +1,26 @@
+import os
 import streamlit as st
 import pandas as pd
 import pyarrow.parquet as pq
-import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
-import os
 
-# --- PAGE CONFIG ---
 st.set_page_config(page_title="LILA BLACK - Match Explorer", layout="wide")
 st.title("🗺️ LILA BLACK - Match Explorer")
 
-# --- CONFIG & CONSTANTS ---
+# Resolve paths dynamically relative to where app.py lives
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+
+# Check both inside lila_black_tools/ and at the repository root
+DATA_DIR = os.path.join(BASE_DIR, "player_data")
+if not os.path.exists(DATA_DIR):
+    DATA_DIR = os.path.join(REPO_ROOT, "player_data")
+
+MAPS_DIR = os.path.join(BASE_DIR, "minimaps")
+if not os.path.exists(MAPS_DIR):
+    MAPS_DIR = os.path.join(REPO_ROOT, "minimaps")
+
 MAP_CONFIG = {
     "AmbroseValley": {"scale": 900, "origin_x": -370, "origin_z": -473, "img": "AmbroseValley_Minimap.png"},
     "GrandRift": {"scale": 581, "origin_x": -290, "origin_z": -290, "img": "GrandRift_Minimap.png"},
